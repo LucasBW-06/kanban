@@ -5,8 +5,29 @@
     <title>Title</title>
 </head>
 <body>
-        {% for tarefa in tarefas %}
-            <li>{{tarefa.titulo}} - {{tarefa.data}}</li>
-        {% endfor %}
+        <div>
+            {% for nivel in niveis %}
+            <div>
+                <h2>{{ nivel.descricao }}</h2>
+                {% for tarefa in tarefas %}
+                    {% if tarefa.nivel == nivel %}
+                        <li>{{ tarefa.titulo }}</li>
+                            {% if tarefa.nivel.id != nivel_max %}
+                                <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
+                                    {% csrf_token %}
+                                    <button type="submit">(+)</button>
+                                </form>
+                            {% endif %}
+                            {% if tarefa.nivel.id != nivel_min %}
+                                <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
+                                    {% csrf_token %}
+                                    <button type="submit">(-)</button>
+                                </form>
+                            {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
 </body>
 </html>
