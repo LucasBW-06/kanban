@@ -10,21 +10,27 @@
             <div>
                 <h2>{{ nivel.descricao }}</h2>
                 {% for tarefa in tarefas %}
-                    {% if tarefa.nivel == nivel %}
+                <div>
+                    {% if tarefa.nivel == nivel.indice %}
                         <li>{{ tarefa.titulo }}</li>
-                            {% if tarefa.nivel.id != nivel_max %}
+                            {% if tarefa.nivel != nivel_max %}
                                 <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
                                     {% csrf_token %}
                                     <button type="submit">(+)</button>
                                 </form>
                             {% endif %}
-                            {% if tarefa.nivel.id != nivel_min %}
+                            {% if tarefa.nivel != nivel_min %}
                                 <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
                                     {% csrf_token %}
                                     <button type="submit">(-)</button>
                                 </form>
                             {% endif %}
+                        <form method="POST" action="{% url 'sistema:deletar_tarefa' tarefa.id %}">
+                            {% csrf_token %}
+                            <button type="submit">(x)</button>
+                        </form>
                     {% endif %}
+                    </div>
                 {% endfor %}
             </div>
             {% endfor %}
