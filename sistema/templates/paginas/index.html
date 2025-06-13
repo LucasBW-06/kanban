@@ -12,23 +12,23 @@
              {% for tarefa in tarefas %}
              <div>
                  {% if tarefa.nivel == nivel.indice %}
-                 <li>{{ tarefa.titulo }}</li>
-                 {% if tarefa.nivel != nivel_max %}
-                 <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
-                     {% csrf_token %}
-                     <button type="submit">(+)</button>
-                 </form>
-                 {% endif %}
-                 {% if tarefa.nivel != 1 %}
-                 <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
-                     {% csrf_token %}
-                     <button type="submit">(-)</button>
-                 </form>
-                 {% endif %}
-                 <form method="POST" action="{% url 'sistema:deletar_tarefa' tarefa.id %}">
-                     {% csrf_token %}
-                     <button type="submit">(x)</button>
-                 </form>
+                 <li><a href="{% url 'sistema:tarefa_edit' tarefa.id %}">{{ tarefa.titulo }}</a></li>
+                     {% if tarefa.nivel != nivel_max %}
+                     <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
+                         {% csrf_token %}
+                         <button type="submit">(+)</button>
+                     </form>
+                     {% endif %}
+                     {% if tarefa.nivel != 1 %}
+                     <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
+                         {% csrf_token %}
+                         <button type="submit">(-)</button>
+                     </form>
+                     {% endif %}
+                     <form method="POST" action="{% url 'sistema:deletar_tarefa' tarefa.id %}">
+                         {% csrf_token %}
+                         <button type="submit">(x)</button>
+                     </form>
                  {% endif %}
              </div>
              {% endfor %}

@@ -31,6 +31,12 @@ def tarefa_add(request):
 
     return render(request, 'paginas/tarefa_add.html', contexto)
 
+def tarefa_edit(request, id_tarefa):
+    tarefa = get_object_or_404(Tarefa, pk=id_tarefa)
+    contexto = {'tarefa': tarefa}
+
+    return render(request, 'paginas/tarefa_edit.html', contexto)
+
 def modificar_nivel(request, id_tarefa, modificador):
     tarefa = get_object_or_404(Tarefa, pk=id_tarefa)
     tarefa.nivel += int(modificador)
@@ -93,5 +99,25 @@ def adicionar_tarefa(request):
                              descricao=descricao,
                              data=prazo)
         nova_tarefa.save()
+
+    return redirect('sistema:index')
+
+def editar_tarefa(request, id_tarefa):
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        descricao = request.POST.get('descricao')
+
+        data = request.POST.get('data')
+        prazo = None
+        if data:
+            prazo = date.fromisoformat(data)
+
+        tarefa = get_object_or_404(Tarefa, pk=id_tarefa)
+
+        tarefa.titulo = titulo
+        tarefa.descricao = descricao
+        tarefa.data = prazo
+
+        tarefa.save()
 
     return redirect('sistema:index')
