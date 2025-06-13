@@ -2,11 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Níveis</title>
 </head>
 <body>
   <div>
-
+      {% for nivel in niveis %}
+            <li>{{ nivel.descricao }}</li>
+            {% if nivel.indice != nivel_max %}
+                <form method="POST" action="{% url 'sistema:modificar_indice' nivel.indice 1 %}">
+                    {% csrf_token %}
+                    <button type="submit">(+)</button>
+                </form>
+            {% endif %}
+            {% if nivel.indice != 1 %}
+                <form method="POST" action="{% url 'sistema:modificar_indice' nivel.indice -1 %}">
+                    {% csrf_token %}
+                    <button type="submit">(-)</button>
+                </form>
+                <form method="POST" action="{% url 'sistema:deletar_nivel' nivel.indice %}">
+                    {% csrf_token %}
+                    <button type="submit">(x)</button>
+                </form>
+            {% endif %}
+      {% endfor %}
+  </div>
+  <div>
+      <a href="{% url 'sistema:index' %}" class="botao">Voltar</a>
   </div>
 </body>
 </html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Nível</title>
+</head>
+<body>
+<div>
+    <form action="{% url 'sistema:adicionar_nivel' %}" method="POST">
+        {% csrf_token %}
+        <label for="descricao">Nome:</label>
+        <input type="text" name="descricao" id="descricao" required>
+
+        <button type="submit">Adicionar Nível</button>
+    </form>
+</div>
+</body>
+</html>

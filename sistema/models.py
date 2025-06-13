@@ -3,7 +3,7 @@ from django.utils import timezone
 
 class Nivel(models.Model):
     descricao = models.CharField(max_length=200, blank=True, null=True)
-    indice = models.PositiveIntegerField(unique=True, blank=True, null=True)
+    indice = models.PositiveIntegerField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.indice:
