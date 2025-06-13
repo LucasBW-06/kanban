@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adição de Tarefa</title>
+</head>
+<body>
+<div>
+  <form action="{% url 'sistema:adicionar_tarefa' %}" method="POST">
+    {% csrf_token %}
+    <label for="titulo">Nome:</label>
+    <input type="text" name="titulo" id="titulo" value="{{ sugestao }}" required>
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" name="descricao" id="descricao">
+
+    <label for="data">Prazo:</label>
+    <input type="date" name="data" id="data">
+
+    <button type="submit">Adicionar Tarefa</button>
+  </form>
+</div>
+<div>
+  <a href="{% url 'sistema:index' %}" class="botao"><button type="button">Voltar</button></a>
+</div>
+</body>
+</html>

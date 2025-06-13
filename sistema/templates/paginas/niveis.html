@@ -27,7 +27,16 @@
       {% endfor %}
   </div>
   <div>
-      <a href="{% url 'sistema:index' %}" class="botao">Voltar</a>
+      <form action="{% url 'sistema:adicionar_nivel' %}" method="POST">
+        {% csrf_token %}
+        <label for="descricao">Nome:</label>
+        <input type="text" name="descricao" id="descricao" required>
+
+        <button type="submit">Adicionar Nível</button>
+      </form>
+  </div>
+  <div>
+      <a href="{% url 'sistema:index' %}" class="botao"><button type="button">Voltar</button></a>
   </div>
 </body>
 </html>

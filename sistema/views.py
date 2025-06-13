@@ -1,9 +1,12 @@
+from pydoc import describe
+
 from django.http import HttpResponse
 from .models import Tarefa
 from .models import Nivel
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import F
 from django.db import models
+from datetime import date
 
 def index(request):
     tarefas = Tarefa.objects.order_by('titulo')
@@ -21,8 +24,12 @@ def niveis(request):
                 'nivel_max': nivel_max}
     return render(request, 'paginas/niveis.html', contexto)
 
-def add_niveis(request):
-    return render(request, 'paginas/adicionar_nivel.html')
+def tarefa_add(request):
+    total = Tarefa.objects.count()
+    sugestao = 'Tarefa ' + str(total + 1)
+    contexto = {'sugestao': sugestao}
+
+    return render(request, 'paginas/tarefa_add.html', contexto)
 
 def modificar_nivel(request, id_tarefa, modificador):
     tarefa = get_object_or_404(Tarefa, pk=id_tarefa)
@@ -71,3 +78,20 @@ def adicionar_nivel(request):
         novo_nivel.save()
 
     return redirect('sistema:niveis')
+
+def adicionar_tarefa(request):
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        descricao = request.POST.get('descricao')
+
+        data = request.POST.get('data')
+        prazo = None
+        if data:
+            prazo = date.fromisoformat(data)
+
+        nova_tarefa = Tarefa(titulo=titulo,
+                             descricao=descricao,
+                             data=prazo)
+        nova_tarefa.save()
+
+    return redirect('sistema:index')

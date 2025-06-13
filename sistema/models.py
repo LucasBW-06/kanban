@@ -19,7 +19,7 @@ class Nivel(models.Model):
 class Tarefa(models.Model):
     descricao = models.CharField(max_length=200, blank=True)
     titulo = models.CharField(max_length=200, blank=True, null=True)
-    data = models.DateField(default=timezone.now)
+    data = models.DateField(blank=True, null=True)
     nivel = models.PositiveIntegerField(default=1)
 
     def save(self, *args, **kwargs):
