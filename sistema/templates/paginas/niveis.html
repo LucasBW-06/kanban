@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Níveis</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <div>
+  <div class="container">
+      <h2 class='titulo'>Níveis</h2>
       {% for nivel in niveis %}
+        <div class="subcontainer">
             <li>{{ nivel.descricao }}</li>
             {% if nivel.indice != nivel_max %}
                 <form method="POST" action="{% url 'sistema:modificar_indice' nivel.indice 1 %}">
                     {% csrf_token %}
-                    <button type="submit">(+)</button>
+                    <button type="submit" class="button_+">+</button>
                 </form>
             {% endif %}
             {% if nivel.indice != 1 %}
                 <form method="POST" action="{% url 'sistema:modificar_indice' nivel.indice -1 %}">
                     {% csrf_token %}
-                    <button type="submit">(-)</button>
+                    <button type="submit" class="button_-">-</button>
                 </form>
                 <form method="POST" action="{% url 'sistema:deletar_nivel' nivel.indice %}">
                     {% csrf_token %}
-                    <button type="submit">(x)</button>
+                    <button type="submit" class="button_x">x</button>
                 </form>
             {% endif %}
+            </div>
       {% endfor %}
-  </div>
-  <div>
+        </div>
+  <div class="container">
       <form action="{% url 'sistema:adicionar_nivel' %}" method="POST">
         {% csrf_token %}
         <label for="descricao">Nome:</label>
@@ -35,7 +40,7 @@
         <button type="submit">Adicionar Nível</button>
       </form>
   </div>
-  <div>
+  <div class="container">
       <a href="{% url 'sistema:index' %}" class="botao"><button type="button">Voltar</button></a>
   </div>
 </body>

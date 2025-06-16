@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Adição de Tarefa</title>
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+<div class="container">
 <div>
   <form action="{% url 'sistema:adicionar_tarefa' %}" method="POST">
     {% csrf_token %}
@@ -22,6 +25,7 @@
 </div>
 <div>
   <a href="{% url 'sistema:index' %}" class="botao"><button type="button">Voltar</button></a>
+</div>
 </div>
 </body>
 </html>

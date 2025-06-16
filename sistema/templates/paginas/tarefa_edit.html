@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ Tarefa.titulo }}</title>
+      {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-<div>
+<div class="container">
 <form action="{% url 'sistema:editar_tarefa' tarefa.id %}" method="POST">
     {% csrf_token %}
     <label for="titulo">Nome:</label>

@@ -3,34 +3,37 @@
 <head>
     <meta charset="UTF-8">
 <title>Quadro de Tarefas</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div>
          {% for nivel in niveis %}
-         <div>
-             <h2>{{ nivel.descricao }}</h2>
+         <div class='container'>
+             <h2 class='titulo'>{{ nivel.descricao }}</h2>
              {% for tarefa in tarefas %}
-             <div>
-                 {% if tarefa.nivel == nivel.indice %}
+             {% if tarefa.nivel == nivel.indice %}
+             <div class='subcontainer'>
+
                  <li><a href="{% url 'sistema:tarefa_edit' tarefa.id %}">{{ tarefa.titulo }}</a></li>
                      {% if tarefa.nivel != nivel_max %}
                      <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
                          {% csrf_token %}
-                         <button type="submit">(+)</button>
+                         <button type="submit" class="button_+">+</button>
                      </form>
                      {% endif %}
                      {% if tarefa.nivel != 1 %}
                      <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
                          {% csrf_token %}
-                         <button type="submit">(-)</button>
+                         <button type="submit" class="button_-">-</button>
                      </form>
                      {% endif %}
                      <form method="POST" action="{% url 'sistema:deletar_tarefa' tarefa.id %}">
                          {% csrf_token %}
-                         <button type="submit">(x)</button>
+                         <button type="submit" class="button_x">x</button>
                      </form>
-                 {% endif %}
-             </div>
+                    </div>
+                {% endif %}
              {% endfor %}
          </div>
         {% endfor %}
