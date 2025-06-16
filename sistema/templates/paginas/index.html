@@ -7,37 +7,37 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div>
-         {% for nivel in niveis %}
-         <div class='container'>
-             <h2 class='titulo'>{{ nivel.descricao }}</h2>
-             {% for tarefa in tarefas %}
-             {% if tarefa.nivel == nivel.indice %}
-             <div class='subcontainer'>
-
-                 <li><a href="{% url 'sistema:tarefa_edit' tarefa.id %}">{{ tarefa.titulo }}</a></li>
-                     {% if tarefa.nivel != nivel_max %}
-                     <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
-                         {% csrf_token %}
-                         <button type="submit" class="button_+">+</button>
-                     </form>
-                     {% endif %}
-                     {% if tarefa.nivel != 1 %}
-                     <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
-                         {% csrf_token %}
-                         <button type="submit" class="button_-">-</button>
-                     </form>
-                     {% endif %}
-                     <form method="POST" action="{% url 'sistema:deletar_tarefa' tarefa.id %}">
-                         {% csrf_token %}
-                         <button type="submit" class="button_x">x</button>
-                     </form>
-                    </div>
+<div class="wrapper">
+    {% for nivel in niveis %}
+    <div class='container'>
+        <h2 class='titulo'>{{ nivel.descricao }}</h2>
+        {% for tarefa in tarefas %}
+            {% if tarefa.nivel == nivel.indice %}
+            <div class='subcontainer'>
+                <li><a href="{% url 'sistema:tarefa_edit' tarefa.id %}">{{ tarefa.titulo }}</a></li>
+                {% if tarefa.nivel != nivel_max %}
+                <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id 1 %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button_+">+</button>
+                </form>
                 {% endif %}
-             {% endfor %}
-         </div>
+                {% if tarefa.nivel != 1 %}
+                <form method="POST" action="{% url 'sistema:modificar_nivel' tarefa.id -1 %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button_-">-</button>
+                </form>
+                {% endif %}
+                <form method="POST" action="{% url 'sistema:deletar_tarefa' tarefa.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button_x">x</button>
+                </form>
+            </div>
+            {% endif %}
         {% endfor %}
     </div>
+    {% endfor %}
+</div>
+
     <div>
         <a href="{% url 'sistema:tarefa_add' %}"><button type="button">Adicionar Tarefa</button></a>
         <a href="{% url 'sistema:niveis' %}"><button type="button">Editar niveis</button></a>
